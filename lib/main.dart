@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:onboarding/data_text.dart';
+import 'package:onboarding/data.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,39 +41,23 @@ class _SliderPageState extends State<SliderPage> {
           children: [
             CarouselSlider(
               options: CarouselOptions(
-                  viewportFraction: 1.0,
-                  height: MediaQuery.of(context).size.height,
-                  initialPage: 0,
-                  enableInfiniteScroll: false,
-                  onPageChanged: (index, _) {
-                    setState(() {
-                      currentSlider = index;
-                    });
-                  }),
+                viewportFraction: 1.0,
+                height: MediaQuery.of(context).size.height,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                onPageChanged: (index, _) {
+                  setState(() {
+                    currentSlider = index;
+                  });
+                },
+              ),
               carouselController: _carouselController,
-              items: [
-                Align(
+              items: data.map((e) {
+                return Align(
                   alignment: Alignment.centerLeft,
-                  child: Image.asset(
-                    "assets/image1.png",
-                    height: 548,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/image2.png",
-                    height: 548,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Image.asset(
-                    "assets/image3.png",
-                    height: 548,
-                  ),
-                ),
-              ],
+                  child: Image.asset(e["image"]),
+                );
+              }).toList(),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -89,7 +73,7 @@ class _SliderPageState extends State<SliderPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      dataText[currentSlider]["title"],
+                      data[currentSlider]["title"],
                       style: TextStyle(
                         color: Color(0xff3B4161),
                         fontSize: 20,
@@ -100,7 +84,7 @@ class _SliderPageState extends State<SliderPage> {
                       height: 20,
                     ),
                     Text(
-                      dataText[currentSlider]["desc"],
+                      data[currentSlider]["desc"],
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff878F95),
